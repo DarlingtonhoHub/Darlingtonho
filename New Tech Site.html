@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TechSite — Modern Technology Landing</title>
+  <meta name="description" content="Responsive interactive tech site template — hero, features, articles, filters, and theme toggle." />
+  <style>
+    :root{
+      --bg:#0f1724; /* deep night */
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent1:#06b6d4; /* cyan-ish */
+      --accent2:#f59e0b; /* amber */
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --max-width:1100px;
+      --ff-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    [data-theme="light"]{
+      --bg: #f7fafc;
+      --card: #fff;
+      --muted:#475569;
+      --accent1:#0369a1;
+      --accent2:#b45309;
+      --glass: rgba(2,6,23,0.03);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family:var(--ff-sans); background:radial-gradient(circle at 10% 10%, rgba(6,182,212,0.06), transparent 8%), var(--bg); color: #e6eef6; -webkit-font-smoothing:antialiased; line-height:1.45;
+      display:flex; justify-content:center; padding:32px 16px;
+    }
+    .site{width:100%; max-width:var(--max-width);} 
+
+    /* Header */
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:48px; height:48px; border-radius:10px; background:linear-gradient(135deg,var(--accent1),var(--accent2)); display:inline-grid; place-items:center; font-weight:700; color:#031024}
+    h1{font-size:1rem; margin:0}
+    .nav{display:flex; gap:12px; align-items:center}
+    .nav a{color:var(--muted); text-decoration:none; font-weight:600; padding:8px 12px; border-radius:10px}
+    .nav a:hover{color:inherit; background:var(--glass)}
+
+    /* Hero */
+    .hero{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:28px; border-radius:var(--radius); display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:center}
+    .hero-left h2{font-size:2rem; margin:0 0 10px}
+    .hero-left p{color:var(--muted); margin:0 0 18px}
+    .cta-row{display:flex; gap:12px; align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#041027; padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700}
+    .ghost{background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:10px}
+
+    .hero-right{display:flex; flex-direction:column; gap:12px}
+    .stat{background:var(--card); padding:14px; border-radius:12px; box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .stat strong{display:block; font-size:1.2rem}
+
+    /* Search & filters */
+    .controls{display:flex; gap:12px; margin:20px 0; flex-wrap:wrap}
+    .search{flex:1; min-width:220px; display:flex; gap:8px; align-items:center; background:var(--card); padding:8px; border-radius:10px}
+    .search input{background:transparent; border:none; outline:none; color:inherit; flex:1; padding:6px}
+    .filter{background:var(--card); padding:8px 10px; border-radius:10px; display:flex; gap:8px; align-items:center}
+
+    /* Grid */
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); transition:transform .25s ease, box-shadow .25s; cursor:default}
+    .card:hover{transform:translateY(-6px); box-shadow:0 14px 30px rgba(2,6,23,0.6)}
+    .card h3{margin:0 0 8px}
+    .badges{display:flex; gap:8px; flex-wrap:wrap}
+    .badge{font-size:.8rem; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,0.03)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      body{padding:20px 10px}
+      .grid{grid-template-columns:1fr}
+      .nav{display:none}
+    }
+
+    /* Footer */
+    footer{margin-top:22px; color:var(--muted); font-size:.95rem; text-align:center}
+
+    /* small utilities */
+    .right{margin-left:auto}
+    .muted{color:var(--muted)}
+
+    /* Modal */
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(1,6,15,0.6); z-index:40}
+    .modal.open{display:flex}
+    .modal-inner{width:min(900px,94%); background:var(--card); padding:18px; border-radius:12px}
+
+    /* tiny animation */
+    .pulse{animation:pulse 2s infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+  </style>
+</head>
+<body data-theme="dark">
+  <main class="site">
+    <header>
+      <div class="brand">
+        <div class="logo">D</div>
+        <div>
+          <h1>DARLINGTONHO SITE</h1>
+          <div class="muted">Explore modern tech stories & tools</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#features">Features</a>
+        <a href="#articles">Articles</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="ghost">Toggle Theme</button>
+      </nav>
+    </header>
+
+    <section class="hero" role="region" aria-label="hero">
+      <div class="hero-left">
+        <h2>Future-ready Technology & Tutorials</h2>
+        <p class="muted">Design patterns, code walkthroughs, product reviews, and hands-on labs — all in one place. Responsive & interactive template you can customize.</p>
+        <div class="cta-row">
+          <button class="btn" id="openModal">Watch Intro</button>
+          <button class="ghost">Get Started</button>
+        </div>
+
+        <div class="controls">
+          <div class="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input id="searchInput" placeholder="Search articles, tutorials..." aria-label="Search articles" />
+          </div>
+
+          <div class="filter">
+            <label class="muted">Category</label>
+            <select id="categoryFilter" style="background:transparent;border:none;color:inherit;outline:none">
+              <option value="all">All</option>
+              <option value="frontend">Frontend</option>
+              <option value="backend">Backend</option>
+              <option value="security">Security</option>
+              <option value="ai">AI</option>
+            </select>
+          </div>
+
+          <div class="filter right">
+            <label class="muted">Sort</label>
+            <select id="sortFilter" style="background:transparent;border:none;color:inherit;outline:none">
+              <option value="new">Newest</option>
+              <option value="popular">Most Popular</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="hero-right">
+        <div class="stat pulse">
+          <strong>12K+</strong>
+          <div class="muted">Monthly readers</div>
+        </div>
+        <div class="stat pulse">
+          <strong>140</strong>
+          <div class="muted">Tutorials & guides</div>
+        </div>
+        <div class="stat pulse">
+          <strong>New</strong>
+          <div class="muted">Weekly deep-dive</div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="articles" style="margin-top:20px">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+        <h2 style="margin:0">Latest Articles</h2>
+        <div class="muted">(Browse & filter)</div>
+      </div>
+
+      <div class="grid" id="cardsGrid">
+        <!-- Cards will be rendered by JS for demo purposes -->
+      </div>
+
+    </section>
+
+    <footer>
+      Built by Darlingtonho ❤️ — <span class="muted">TechSite • Responsive • Accessible</span>
+    </footer>
+
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-inner">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <h3 style="margin:0">Intro — TechSite</h3>
+        <button id="closeModal" class="ghost">Close</button>
+      </div>
+      <div style="margin-top:12px;">
+        <p class="muted">This is a demo modal. Replace with an embedded video or a tutorial preview.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample data for cards
+    const articles = [
+      {id:1, title:'Building Fast Frontends', tags:['frontend','popular'], excerpt:'Learn how to optimize rendering and bundle size for blazing performance.'},
+      {id:2, title:'Intro to Secure APIs', tags:['backend','security'], excerpt:'Design APIs with authentication, rate-limiting, and secure patterns.'},
+      {id:3, title:'Practical Machine Learning', tags:['ai','popular'], excerpt:'From data prep to production-ready models — a practical guide.'},
+      {id:4, title:'Modern CSS Layouts', tags:['frontend'], excerpt:'Grid, flexbox, and new layout techniques that actually work.'},
+      {id:5, title:'Threat Modeling 101', tags:['security'], excerpt:'A simple process to identify and prioritize risks.'},
+      {id:6, title:'Scalable Databases', tags:['backend'], excerpt:'Partitioning, indexing, and patterns for scale.'},
+      {id:7, title:'AI for Product Teams', tags:['ai'], excerpt:'How product managers can use AI to build features users love.'},
+      {id:8, title:'WebAssembly Today', tags:['frontend','backend'], excerpt:'When to use WebAssembly and how it changes web performance.'}
+    ];
+
+    const grid = document.getElementById('cardsGrid');
+
+    function renderCards(list){
+      grid.innerHTML = '';
+      list.forEach(a=>{
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.setAttribute('data-id', a.id);
+        el.innerHTML = `
+          <h3>${a.title}</h3>
+          <p class="muted">${a.excerpt}</p>
+          <div class="badges" style="margin-top:12px">
+            ${a.tags.map(t=>`<span class="badge">${t}</span>`).join('')}
+            <button class="btn" style="margin-left:auto" data-action="open">Read</button>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    renderCards(articles);
+
+    // Search & Filter
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+      let filtered = articles.filter(a=>{
+        const matchesQ = a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q) || a.tags.join(' ').includes(q);
+        const matchesCat = (cat === 'all') ? true : a.tags.includes(cat);
+        return matchesQ && matchesCat;
+      });
+      renderCards(filtered);
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    categoryFilter.addEventListener('change', applyFilters);
+
+    // Modal behavior
+    const modal = document.getElementById('modal');
+    const openModalBtn = document.getElementById('openModal');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    openModalBtn.addEventListener('click', ()=>{
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    });
+    closeModalBtn.addEventListener('click', ()=>{
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    });
+    modal.addEventListener('click', (e)=>{
+      if(e.target === modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+    });
+
+    // Open article from card
+    document.addEventListener('click', (e)=>{
+      const target = e.target;
+      if(target.dataset && target.dataset.action === 'open'){
+        const card = target.closest('.card');
+        const id = card && card.getAttribute('data-id');
+        const article = articles.find(a=>String(a.id)===String(id));
+        if(article){
+          alert(article.title + "\n\n" + article.excerpt + "\n\nTags: " + article.tags.join(', '));
+        }
+      }
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', ()=>{
+      const root = document.body;
+      const cur = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      if(cur === 'dark') root.setAttribute('data-theme','light'); else root.setAttribute('data-theme','dark');
+    });
+
+    // small accessibility: focus outline for keyboard users
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Tab') document.body.classList.add('show-focus');
+    });
+
+  </script>
+</body>
+</html>
